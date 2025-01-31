@@ -1,0 +1,56 @@
+set ns [new Simulator] 
+set na [open Lab4.nam w]
+$ns namtrace-all-wireless Sna 500 500 set nt open Lab4.tr w)|
+$ns trace-all Snt set topo [new Topography] Stopo load_flatgrid 500 500
+$ns node-config -adhocRouting DSDV
+$ns node-config -IlType LL
+$ns node-config-macType Mаc/802_11
+$ns node-config -ifqType Queue/Drop Tail
+$ns node-config -ifqLen 50
+$ns node-config -phyType Phy/WirelessPhy
+$ns node-config -channelType Channel/WirelessChannel Sns node-config -prop Type Propagation/TwoRayGround
+$ns node-config-ant Type Antenna/OmniAntenna
+$ns node-config topolnstance Stopo
+$ns node-config -agentTrace ON
+$ns node-config -router Trace ON create-god 4
+set no [Sns node) set n1 [Sns node] set n2 Sns node set n3 Sns node $n0 set X_ 250.0
+$n0 set Y_ 250.0
+$n0 set Z_ 0.0
+$n1 set X_ 200.0
+$n1 set Y_ 250.0
+$n1 set Z_ 0.0
+$n2 set X. 250.0
+$n2 set Y. 250.0
+$n2 set Z_ 0.0
+$n3 set X_ 250.0
+$n3 set Y. 250.0
+$n3 set Z_ 0.0
+ins at 0.0 "$n0 setdest 400.0 300.0 50.0
+ins at 0.0 "$n1 setdest 50.0 100.0 20.0”
+Sns at 0.0 "$n2 setdest 75.0 180.0 5.0”
+
+set sink1 [new Agent/TCPSink]
+$ns attach-agent $n1 Ssink1 set sink [new Agent/TCPSink]
+$ns attach-agent Sn3 Ssink2
+set cbr1 [new Application/Traffic/CBR]
+$cbr1 attach-agent Step1
+set cbr2 [new Application/Traffic/CBR]
+$cbr2 attach-agent Stcp2
+$ns connect Stcp1 Ssink1
+$ns connect Stcp2 $sink2
+proc End 0{
+global ns nt na
+$ns flush-trace close Sna close Snt
+exec nam Lab4.nam &
+$ns at 0.0 "$cbr1 start" Sns at 0.0 "Scbr2 start"
+$ns at 10.0 "End"
+$ns run
+
+
+AWK Code
+BEGIN{Num_of_pkts=0;}
+if ($1 == V" 88 $3 =="1' 88 $4 == "AGT" && $7 == "tep")
+Num_of_pkts = Num_of_pkts + $8;
+ENDS
+Throughput = Num_of_pkts * 8 / $2/1000000;
+print/In\nitThroughput = %bpmsin/nin, Throughput);
